@@ -207,4 +207,49 @@ public class MemberDAO {
 		return memberList;
 	}
 
+
+
+
+	public Member login(Connection conn, Member mem) throws Exception{
+		
+		Member loginMember = null;
+		
+		try {
+			
+			String sql = prop.getProperty("loginMember");
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, mem.getMemberEmail());
+			pstmt.setString(2, mem.getMemberPw());
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				loginMember = new Member();
+				
+				
+				loginMember.setMemberNo(rs.getInt("MEMBER_NO"));
+				loginMember.setMemberEmail(rs.getString("MEMBER_EMAIL"));
+				loginMember.setMemberNickname(rs.getString("MEMBER_NICK"));
+				loginMember.setMemberTel(rs.getString("MEMBER_TEL"));
+				loginMember.setMemberAddress(rs.getString("MEMBER_ADDR"));
+				loginMember.setProfileImage(rs.getString("PROFILE_IMG"));
+				loginMember.setEnrollDate(rs.getString("ENROLL_DT"));
+				
+				
+			}
+			
+			
+		}finally {
+			close(rs);
+			close(pstmt);
+			
+		}
+		
+		
+		
+		
+		return loginMember;
+	}
+
 }

@@ -72,7 +72,7 @@ public class MemberService {
 	}
 
 
-	public List<Member> selectAll() throws Exception {
+	public List<Member> selectAll() throws Exception{
 		
 		
 		
@@ -84,6 +84,19 @@ public class MemberService {
 		
 		
 		return memberList;
+	}
+
+
+	public Member login(Member mem) throws Exception{
+		
+		Connection conn = getConnection();
+		
+		Member loginMember = dao.login(conn, mem);
+		
+		close(conn);
+		
+		
+		return loginMember;
 	}
 	
 	

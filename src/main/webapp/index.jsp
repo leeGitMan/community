@@ -67,38 +67,55 @@
 
             <section class="content-2">
 
-                <form action="#" name="login-frm">
+                <c:choose>
+                    <c:when test="${ empty sessionScope.loginMember }">
+                        <form action="member/login" name="login-form" mehtod="POST">
         
-                    <!-- 아이디, 비밀번호, 로그인 버튼 -->
-                    <fieldset id="id-pw-area">
-                        <section>
-                            <input type="text" name="inputId"
-                             placeholder="아이디" autocomplete="off">
-                            <!-- autocomplete="off" : 자동완성 사용 X -->
-        
-                            <input type="password" name="inputPw" placeholder="비밀번호">
-                        </section>
-        
-                        <section>
-                            <!-- type="submit"이 기본값 -->
-                            <button>로그인</button>
-                        </section>
-                    </fieldset>
-        
-        
-                    <!-- label 태그 내부에 input태그를 작성하면 자동 연결됨 -->
-                    <label>
-                        <input type="checkbox" name="saveId"> 아이디 저장
-                    </label>
-        
-        
-                    <!-- 회원가입 / ID/PW 찾기 -->
-                    <article id="signUp-find-area">
-                        <a href="${contextPath}/member/signUp">회원가입</a>
-                        <span>|</span>
-                        <a href="#">ID/PW찾기</a>
-                    </article>
-                </form>
+                            <!-- 아이디, 비밀번호, 로그인 버튼 -->
+                            <fieldset id="id-pw-area">
+                                <section>
+                                    <input type="text" name="inputEmail"
+                                     placeholder="아이디" autocomplete="off" onsubmit= "return loginValidate()" value="${cookie.saveId.value}">
+                                    <!-- autocomplete="off" : 자동완성 사용 X -->
+                
+                                    <input type="password" name="inputPw" placeholder="비밀번호">
+                                </section>
+                
+                                <section>
+                                    <!-- type="submit"이 기본값 -->
+                                    <button>로그인</button>
+                                </section>
+                            </fieldset>
+
+                            <c:if test="${ !empty cookie.saveId.value}">
+
+                                <%-- chk 변수 생성(page scope)--%>
+                                <c:set var="chk" value="checked"/>
+
+                            </c:if>
+                
+                
+                            <!-- label 태그 내부에 input태그를 작성하면 자동 연결됨 -->
+                            <label>
+                                <input type="checkbox" name="saveId" ${chk} id="saveId"> 아이디 저장
+                            </label>
+                
+                
+                            <!-- 회원가입 / ID/PW 찾기 -->
+                            <article id="signUp-find-area">
+                                <a href="${contextPath}/member/signUp">회원가입</a>
+                                <span>|</span>
+                                <a href="#">ID/PW찾기</a>
+                            </article>
+                        </form>
+
+
+                    </c:when>
+
+
+                </c:choose>
+
+                
             </section>
         </section>
 
