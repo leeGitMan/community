@@ -171,8 +171,12 @@ memberPwConfirm.addEventListener("keyup", e =>{
     if(memberPw.value == e.target.value){
         pwMessage.innerText = "비밀번호가 일치합니다.";
         checkObj.memberPwConfirm = true;
+        pwMessage.classList.add("confirm");
+        pwMessage.classList.remove("error");
     }else{
         pwMessage.innerText = "비밀번호가 일치하지 않습니다. 다시 입력해주세요.";
+        pwMessage.classList.remove("confirm");
+        pwMessage.classList.add("error");
     }
 });
 
@@ -180,17 +184,18 @@ memberPwConfirm.addEventListener("keyup", e =>{
 // 닉네임
 // 닉네임은 디비에 있기에 에이젝스 통신으로 디비에 전달해주자
 
-const nickName = document.getElementById("memberNickName");
+const nickName = document.getElementById("memberNickname");
 const nickMessage = document.getElementById("nicknameMessage");
 
 nickName.addEventListener("keyup", e => {
     
     // 닉네임 정규 표현식을 먼저 작성
-    const nickRegExp = /^[a-zA-Z가-힣]{2,10}]$/;
+    const nickRegExp = /^[a-zA-Z가-힣]{2,10}$/;
+    
     
     // 닉네임 형식과 맞으면 에이젝스 통신을 통해서 디비로 닉네임 값을 넘겨야한다.
 
-    if(nickRegExp.test(e.target.value)){
+    if(nickRegExp.test(nickName.value)){
         console.log("성공");
         $.ajax({
             url : "nickName",
@@ -224,15 +229,17 @@ const memberTel = document.getElementById("memberTel");
 const telMessage = document.getElementById("telMessage");
 
 memberTel.addEventListener("keyup", e =>{
-
+    
     const telRegExp = /^[0-9]{10,11}$/;
 
     if(telRegExp.test(e.target.value)){
+        
         checkObj.memberTel = true;
         telMessage.innerText = "유효한 전화번호입니다.";
         telMessage.classList.add("confirm");
         telMessage.classList.remove("error");
     }else{
+        
         telMessage.innerText = "유효하지 않은 전화번호입니다.";
         telMessage.classList.remove("confirm");
         telMessage.classList.add("error");
